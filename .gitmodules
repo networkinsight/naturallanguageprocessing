@@ -1,0 +1,3 @@
+[submodule "NIHackTwistory"]
+	path = NIHackTwistory
+	url = git@github.com:argo2445/NIHackTwistory.git
