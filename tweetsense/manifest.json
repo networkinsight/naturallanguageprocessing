@@ -16,7 +16,11 @@
   "content_scripts": [
     {
       "matches": ["*://*.twitter.com/*"],
-      "js": ["tweetsense.js", "appearance.js"]
+      "js": [
+        "watson.js",
+        "tweetsense.js",
+        "appearance.js"
+      ]
     }
   ],
   
