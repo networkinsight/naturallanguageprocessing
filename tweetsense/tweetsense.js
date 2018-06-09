@@ -24,6 +24,7 @@ function getNewTweets() {
             // analyze tweet text using Watson API
             requestWatson(data_item_id, parsed.text, function (tweetId, response) {
                 var temp = totalSentiment(response);
+                if (temp == undefined) return;
                 var sentiment = temp.value;
                 allTweets[tweetId].sentimentValue = sentiment;
                 allTweets[tweetId].alreadyProcessed = true;
