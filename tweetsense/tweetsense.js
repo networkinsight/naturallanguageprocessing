@@ -1,6 +1,5 @@
 var allTweets = {}
 //x[i].style.backgroundColor = "red";
->>>>>>> b6515dc5a084a5954647433de0b2eb40c2ceb2ad
 
 function getNewTweets() {
     var x = document.getElementsByClassName("tweet");
