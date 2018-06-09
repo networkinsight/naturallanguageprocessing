@@ -1,4 +1,6 @@
 var allTweets = {}
+//x[i].style.backgroundColor = "red";
+>>>>>>> b6515dc5a084a5954647433de0b2eb40c2ceb2ad
 
 function getNewTweets() {
     var x = document.getElementsByClassName("tweet");
@@ -14,6 +16,11 @@ function getNewTweets() {
                 alreadyProcesses: false
             }
             allTweets[data_item_id] = object;
+            
+            setTweetColor(
+                x[i],
+                sentinentColor((data_item_id % 1000)/500-1)
+            );
         }
     } 
 }
