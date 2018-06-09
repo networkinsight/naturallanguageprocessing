@@ -1,3 +1,6 @@
 [submodule "NIHackTwistory"]
 	path = NIHackTwistory
 	url = git@github.com:argo2445/NIHackTwistory.git
+[submodule "joyfulArticles"]
+	path = joyfulArticles
+	url = https://github.com/SebastianGer/nlp-hackathon
