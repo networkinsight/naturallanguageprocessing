@@ -47,28 +47,63 @@ function processRawTweet(tweet){
 
 function collapseTweet(tweet){
     var parentNode = tweet.parentNode
-    var toggleButton = document.createElement("button")
 
     tweet.style.display = "none"
 
-    toggleButton.appendChild(document.createTextNode("Show"))
+    var container = document.createElement("div")
+    container.style.width = "100%"
+    container.style.borderColor = "black"
+    container.style.borderRadius = "10px"
+    container.style.borderWidth = "10px"
+
+    var toggleButton = document.createElement("button")
+    toggleButton.classList.add("censorshipButton")
+
+    var textBlock = document.createElement("p")
+    textBlock.appendChild(document.createTextNode("This content was classified to be too negative"))
+    textBlock.style.width = "100%"
+    textBlock.style.textAlign = "center"
+    textBlock.style.padding = "16px"
+    textBlock.style.fontSize = "23px"
+    textBlock.style.outline = "none"
+    textBlock.style.color = "#555"
+
+    container.appendChild(textBlock)
+    container.appendChild(toggleButton)
+
+    //var css = '.censorshipButton:hover{ background-color: #00ff00 }'
+    //
+    toggleButton.addEventListener("mouseenter", () => {
+        toggleButton.style.backgroundColor = "#444"
+        toggleButton.style.color = "#eee"
+    })
+    toggleButton.addEventListener("mouseleave", () => { 
+        toggleButton.style.backgroundColor = "#eee"
+        toggleButton.style.color = "#444"
+    })
+
+    toggleButton.appendChild(document.createTextNode("Understood. Show it regardless"))
+    toggleButton.style.backgroundColor = "#eee"
+    toggleButton.style.color = "#444"
+    toggleButton.style.padding = "18px"
+    toggleButton.style.width = "100%"
+    toggleButton.style.fontSize = "17px"
+    toggleButton.style.border = "none"
+    toggleButton.style.textAlign = "center"
+
     toggleButton.addEventListener("click", function (){
         var siblings = parentNode.childNodes
         for(var j = 0; j < siblings.length; j++){
             if(siblings[j].classList && siblings[j].classList.contains("tweet")){
-                content = siblings[j]
-                if(content.style.display == "block"){
-                    content.style.display = "none"
-                } else {
-                    content.style.display = "block"
-                }
+                siblings[j].style.display = "block"
+                container.style.display = "none"
             }
         }
         
-        toggleButton.firstChild.data = toggleButton.firstChild.data == "Show" ? "Hide" : "Show"; 
+        //toggleButton.firstChild.data = toggleButton.firstChild.data == "Show" ? "Hide" : "Show"; 
     })
 
-    parentNode.appendChild(toggleButton)
+    parentNode.appendChild(container)
 
 }
 
