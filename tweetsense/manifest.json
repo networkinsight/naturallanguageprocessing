@@ -17,9 +17,9 @@
     {
       "matches": ["*://*.twitter.com/*"],
       "js": [
+        "appearance.js"
         "watson.js",
         "tweetsense.js",
-        "appearance.js"
       ]
     }
   ],
