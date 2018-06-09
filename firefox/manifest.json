@@ -1,0 +1,20 @@
+{
+
+  "manifest_version": 2,
+  "name": "TweetSense",
+  "version": "1.0",
+
+  "description": "Sentinent analysis and color highlighting of Twitter content.",
+
+  "icons": {
+    "48": "res/logo-48.png"
+  },
+
+  "content_scripts": [
+    {
+      "matches": ["*://*.mozilla.org/*"],
+      "js": ["tweetsense.js"]
+    }
+  ]
+
+}
