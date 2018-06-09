@@ -26,7 +26,7 @@ function analyze(text, callback) {
         }
     }
     
-    xhttp.open("POST", MATTY_URL, true);
+    xhttp.open("POST", WATSON_URL, true);
     xhttp.withCredentials = true;
     xhttp.setRequestHeader("Content-Type", "application/json");
     xhttp.setRequestHeader("Authorization", "Basic " + btoa(WATSON_UNAME+":"+WATSON_PWD));

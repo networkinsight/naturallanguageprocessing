@@ -21,7 +21,7 @@ function getNewTweets() {
             allTweets[data_item_id] = object;
             added++;
 
-            analyze(parsed, console.log);
+            analyze(parsed.text, console.log);
             setTweetColor(
                 x[i],
                 sentimentColor(object.sentimentValue)
@@ -72,11 +72,10 @@ function collapseTweet(tweet){
 
 }
 
-//getNewTweets()
-//setInterval(getNewTweets, 10000)
+getNewTweets()
+setInterval(getNewTweets, 10000)
 
-//setTimeout( () => console.log(allTweets), 5000)
-setTimeout( () => testAnalyze(), 1000)
+setTimeout( () => console.log(allTweets), 5000)
 
 function analyzeWord(word) {
 
