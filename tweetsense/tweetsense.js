@@ -10,16 +10,18 @@ function getNewTweets() {
         const data_item_id = x[i].getAttribute("data-item-id")
         if(data_item_id != null && !(Object.keys(allTweets).includes(data_item_id))){
             var parsed = processRawTweet(x[i])
-            allTweets[data_item_id] = {
+            var object = {
                 id: data_item_id,
                 tweet: x[i],
                 tweetData: parsed,
                 alreadyProcesses: false,
                 sentimentValue: (data_item_id % 1000)/500-1
             }
+            
             allTweets[data_item_id] = object;
             added++;
 
+            analyze(parsed, console.log);
             setTweetColor(
                 x[i],
                 sentinentColor(object.sentimentValue)

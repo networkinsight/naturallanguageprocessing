@@ -13,13 +13,17 @@
     "128": "res/logo-128.png"    
   },
 
+  "permissions": [
+    "*://gateway-fra.watsonplatform.net/*"
+  ],
+
   "content_scripts": [
     {
       "matches": ["*://*.twitter.com/*"],
       "js": [
-        "appearance.js"
+        "appearance.js",
         "watson.js",
-        "tweetsense.js",
+        "tweetsense.js"
       ]
     }
   ],
