@@ -7,12 +7,13 @@
   "description": "Sentinent analysis and color highlighting of Twitter content.",
 
   "icons": {
-    "48": "res/logo-48.png"
+    "48": "res/logo-48.png",
+    "96": "res/logo-96.png"
   },
 
   "content_scripts": [
     {
-      "matches": ["*://*.mozilla.org/*"],
+      "matches": ["*://*.twitter.com/*"],
       "js": ["tweetsense.js"]
     }
   ]
