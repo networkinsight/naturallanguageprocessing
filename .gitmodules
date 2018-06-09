@@ -4,3 +4,6 @@
 [submodule "joyfulArticles"]
 	path = joyfulArticles
 	url = https://github.com/SebastianGer/nlp-hackathon
+[submodule "NLHackathon"]
+	path = NLHackathon
+	url = https://github.com/franzi-19/NLHackathon.git
