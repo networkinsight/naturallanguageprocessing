@@ -23,12 +23,15 @@ function getNewTweets() {
 
             // analyze tweet text using Watson API
             requestWatson(data_item_id, parsed.text, function (tweetId, response) {
-                var sentiment = totalSentiment(response);
+                var temp = totalSentiment(response);
+                var sentiment = temp.value;
                 allTweets[tweetId].sentimentValue = sentiment;
                 allTweets[tweetId].alreadyProcessed = true;
                 setTweetColor(tweetId, sentimentColor(sentiment));
                 if (sentiment < (-0.5)) {
                     collapseTweet(tweetId);
+                } else {
+                    if(temp != undefined) addSentBar(tweetId, temp)
                 }
             });
         }
@@ -36,9 +39,36 @@ function getNewTweets() {
     // console.log("added", added, "new items")
 }
 
+function addSentBar(tweetId, result){
+    var tweet = allTweets[tweetId].tweet;
+    var parentNode = tweet.parentNode
+
+    var newDiv = document.createElement("div")
+    newDiv.appendChild(tweet)
+    newDiv.style.width = "100%"
+
+    var sentBar = document.createElement("div")
+    sentBar.style.width = "100%"
+    sentBar.style.textAlign = "center"
+    sentBar.style.backgroundColor = "#444"
+    sentBar.style.color = "#eee"
+    for(var i = 0; i < result.length; i++){
+        var span = document.createElement("span")
+        span.style.width = "100%"
+        span.style.paddingLeft = "5px"
+        span.style.paddingRight = "5px"
+        span.appendChild(document.createTextNode("   " + result.keywords[i].keyword + ": " + result.keywords[i].sentiment + "  "))
+        sentBar.appendChild(span)
+    }
+
+    newDiv.appendChild(sentBar)
+    parentNode.appendChild(newDiv)
+}
+
 function processRawTweet(tweet){
     var t = tweet.getElementsByClassName("js-tweet-text")[0].innerHTML;
     t = t.replace(/<a.*\/a>/i, "");
+    t = t.replace(/<img.*>/i, "");
     var a = tweet.getElementsByClassName("fullname")[0].innerHTML;
     return {author: a, text: t};
 }

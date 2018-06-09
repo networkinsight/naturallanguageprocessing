@@ -42,8 +42,8 @@ function totalSentiment(watsonResponse) {
     // filter sentiments *exactly* equal to 0
     // (these were probably unknown to Watson)
     values = values.filter(v => v.sentiment != 0);
-    if (values.lenght == 0)
-        return 0;
+    if (values.length == 0)
+        return undefined;
 
     // sortiere *absteigend* nach Relevanz    
     values.sort(function byRelevance(u, v) {
@@ -67,6 +67,6 @@ function totalSentiment(watsonResponse) {
         "\n        keywords:", values.slice(0, length).map(v => v.keyword)
     );
     
-    return result;
+    return { "value": result, "keywords": values, "length": length }
     
 }
