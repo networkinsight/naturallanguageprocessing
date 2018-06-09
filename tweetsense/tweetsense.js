@@ -14,7 +14,7 @@ function getNewTweets() {
                 id: data_item_id,
                 tweet: x[i],
                 tweetData: parsed,
-                alreadyProcesses: false,
+                alreadyProcessed: false,
                 sentimentValue: 0
             }
             
@@ -27,7 +27,7 @@ function getNewTweets() {
                 allTweets[tweetId].sentimentValue = sentiment;
                 allTweets[tweetId].alreadyProcessed = true;
                 setTweetColor(tweetId, sentimentColor(sentiment));
-                if (sentiment < (-0.5)) {
+                if (sentiment < (-0.75)) {
                     collapseTweet(tweetId);
                 }
             });
