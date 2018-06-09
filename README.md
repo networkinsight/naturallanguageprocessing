@@ -12,6 +12,8 @@ von Matthias Jakobs und Sascha Mücke.
 * Tweets mit zu großem negativem Sentiment-Wert ausblenden
 * ausgeblendete Tweets können per Klick wieder eingeblendet werden
 
-## Ausblick
+## Erweiterungsmöglichkeiten
 
 * Schwellwert fürs Ausblenden der Tweets unter _Einstellungen_ verändern
+* Sentiment-Werte intern abspeichern und abrufen, damit beim Neuladen der Seite nicht nochmal die Requests an die Watson-API geschickt werden
+* verschiedene Emotionen farblich differenzieren
