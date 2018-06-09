@@ -4,7 +4,7 @@
 
 von Matthias Jakobs und Sascha Mücke.
 
-**TweetSense** ist eine Browser-Extension für Google Chrome, mit der Benutzer vor negativen Tweets geschützt werden kann.
+**TweetSense** ist eine Browser-Extension für Google Chrome, mit der Benutzer vor negativen Tweets geschützt werden können.
 
 ## Features
 
