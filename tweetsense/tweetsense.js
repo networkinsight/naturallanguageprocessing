@@ -24,10 +24,12 @@ function getNewTweets() {
             analyze(parsed, console.log);
             setTweetColor(
                 x[i],
-                sentinentColor(object.sentimentValue)
+                sentimentColor(object.sentimentValue)
             );
 
-            if(object.sentimentValue < -0.5) collapseTweet(x[i])
+            console.log("[DEBUG] sentiment value =", object.sentimentValue);
+            if (object.sentimentValue < (-0.5))
+                collapseTweet(x[i])
 
         }
     } 
@@ -49,7 +51,7 @@ function collapseTweet(tweet){
 
     tweet.style.display = "none"
 
-    toggleButton.appendChild(document.createTextNode("let me see it"))
+    toggleButton.appendChild(document.createTextNode("Show"))
     toggleButton.addEventListener("click", function (){
         var siblings = parentNode.childNodes
         for(var j = 0; j < siblings.length; j++){
@@ -62,16 +64,19 @@ function collapseTweet(tweet){
                 }
             }
         }
+        
+        toggleButton.firstChild.data = toggleButton.firstChild.data == "Show" ? "Hide" : "Show"; 
     })
 
     parentNode.appendChild(toggleButton)
 
 }
 
-getNewTweets()
-setInterval(getNewTweets, 10000)
+//getNewTweets()
+//setInterval(getNewTweets, 10000)
 
-setTimeout( () => console.log(allTweets), 5000)
+//setTimeout( () => console.log(allTweets), 5000)
+setTimeout( () => testAnalyze(), 1000)
 
 function analyzeWord(word) {
 

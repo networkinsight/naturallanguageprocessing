@@ -14,7 +14,8 @@
   },
 
   "permissions": [
-    "*://gateway-fra.watsonplatform.net/*"
+    "*://gateway-fra.watsonplatform.net/*",
+    "http://165.227.129.160:1122/analyze"
   ],
 
   "content_scripts": [

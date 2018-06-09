@@ -7,7 +7,7 @@ function setTweetColor(tweet, rgbString) {
     tweet.style.backgroundColor = rgbString;
 }
 
-function sentinentColor(x) {
+function sentimentColor(x) {
     // x is in range [-1, 1]
     var rgb;
     
