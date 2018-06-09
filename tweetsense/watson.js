@@ -1,28 +1,22 @@
 var WATSON_URL = "https://gateway-fra.watsonplatform.net/natural-language-understanding/api/v1/analyze?version=2018-03-16";
-var MATTY_URL = "http://165.227.129.160:1122/analyze"
-// var WATSON_VERSION = "2018-03-16"
 var WATSON_UNAME = "7a5c3aca-9890-4115-82df-cb109843d481";
 var WATSON_PWD = "yyjvbBxBvOV0"; 
 
-function analyze(text, callback) {
-    console.log("[DEBUG] analyzing text");
-
-    var xhttp = new XMLHttpRequest();
+function requestWatson(tweetId, text, callback) {
+   var xhttp = new XMLHttpRequest();
     var params = {
         "text": text,
         "features": {
             "keywords": {
                 "sentiment": true,
-                "limit": 2
+                "limit": 8
             }
         }
     };
     
     xhttp.onreadystatechange = function() {
-        console.log("[DEBUG] status =", this.status);
         if (this.readyState == 4 && this.status == 200) {
-            console.log("[DEBUG] Got a valid response!");
-            callback(xhttp.responseText);
+            callback(tweetId, xhttp.responseText);
         }
     }
     
@@ -32,33 +26,47 @@ function analyze(text, callback) {
     xhttp.setRequestHeader("Authorization", "Basic " + btoa(WATSON_UNAME+":"+WATSON_PWD));
     xhttp.setRequestHeader("Accept", "application/json");
     xhttp.send(JSON.stringify(params));
-    
-    console.log("[DEBUG] request sent …");
 }
 
-function testAnalyze() {
-    var input = {
-          "text": "IBM is an American multinational technology company headquartered in Armonk, New York, United States, with operations in over 170 countries.",
-          "features": {
-              "entities": {
-                        "emotion": true,
-                        "sentiment": true,
-                        "limit": 2
-                      },
-              "keywords": {
-                        "emotion": true,
-                        "sentiment": true,
-                        "limit": 2
-                      }
-            }
-        }
-        var data = {
-            method: "POST",
-            body: JSON.stringify(input),
-            headers: {
-                "Content-Type": "application/json"
-            }
-        }
-        var response = fetch("http://165.227.129.160:1122/analyze", data)
-        response.then(res => res.json()).catch(error => console.error('Error:', error)).then(response => console.log('Success:', response));
+function totalSentiment(watsonResponse) {
+    var values = [];
+    
+    JSON.parse(watsonResponse).keywords.forEach(function (keyword) {
+        values.push({
+            sentiment: keyword.sentiment.score,
+            relevance: keyword.relevance,
+            keyword: keyword.text
+        });
+    });
+
+    // filter sentiments *exactly* equal to 0
+    // (these were probably unknown to Watson)
+    values = values.filter(v => v.sentiment != 0);
+    if (values.lenght == 0)
+        return 0;
+
+    // sortiere *absteigend* nach Relevanz    
+    values.sort(function byRelevance(u, v) {
+        return v.relevance - u.relevance;
+    });
+    
+    // nimm die nach Relevanz gewichtete Summe der Sentiments der drei
+    // relevantesten Keywords
+    var length = Math.min(values.length, 3);
+    var result_tmp = values.slice(0, length).reduce(function (s, a) {
+        s.weighted_sum += a.relevance * a.sentiment;
+        s.summed_weights += a.relevance;
+        return s;
+    }, {weighted_sum: 0, summed_weights: 0});
+    var result = result_tmp.weighted_sum/result_tmp.summed_weights;
+    
+    
+    console.log("[DEBUG] sentiments:", values.map(v => v.sentiment),
+        "\n        relevances:", values.map(v => v.relevance),
+        "\n        result:", result,
+        "\n        keywords:", values.slice(0, length).map(v => v.keyword)
+    );
+    
+    return result;
+    
 }

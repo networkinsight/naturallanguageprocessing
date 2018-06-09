@@ -1,10 +1,9 @@
-
 const SENT_NEGATIVE = { r: 255, g:  45, b: 0   };
 const SENT_NEUTRAL  = { r: 255, g: 255, b: 255 };
 const SENT_POSITIVE = { r:   0, g: 255, b: 0   };
 
-function setTweetColor(tweet, rgbString) {
-    tweet.style.backgroundColor = rgbString;
+function setTweetColor(tweetId, rgbString) {
+    allTweets[tweetId].tweet.style.backgroundColor = rgbString;
 }
 
 function sentimentColor(x) {
@@ -13,16 +12,16 @@ function sentimentColor(x) {
     
     if (x >= 0)
         rgb = {
-            r: x * SENT_NEUTRAL.r + (1-x) * SENT_POSITIVE.r,
-            g: x * SENT_NEUTRAL.g + (1-x) * SENT_POSITIVE.g,
-            b: x * SENT_NEUTRAL.b + (1-x) * SENT_POSITIVE.b
+            r: (1-x) * SENT_NEUTRAL.r + x * SENT_POSITIVE.r,
+            g: (1-x) * SENT_NEUTRAL.g + x * SENT_POSITIVE.g,
+            b: (1-x) * SENT_NEUTRAL.b + x * SENT_POSITIVE.b
         }
     else {
-        x = -x;
+        var abs_x = Math.abs(x);
         rgb = {
-            r: x * SENT_NEUTRAL.r + (1-x) * SENT_NEGATIVE.r,
-            g: x * SENT_NEUTRAL.g + (1-x) * SENT_NEGATIVE.g,
-            b: x * SENT_NEUTRAL.b + (1-x) * SENT_NEGATIVE.b
+            r: (1-abs_x) * SENT_NEUTRAL.r + abs_x * SENT_NEGATIVE.r,
+            g: (1-abs_x) * SENT_NEUTRAL.g + abs_x * SENT_NEGATIVE.g,
+            b: (1-abs_x) * SENT_NEUTRAL.b + abs_x * SENT_NEGATIVE.b
         }
     }
     

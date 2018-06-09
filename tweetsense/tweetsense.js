@@ -5,7 +5,7 @@ function getNewTweets() {
     var x = document.getElementsByClassName("tweet");
     console.log(x.length)
     var i;
-    var added = 0;
+    // var added = 0;
     for (i = 0; i < x.length; i++) {
         const data_item_id = x[i].getAttribute("data-item-id")
         if(data_item_id != null && !(Object.keys(allTweets).includes(data_item_id))){
@@ -15,37 +15,36 @@ function getNewTweets() {
                 tweet: x[i],
                 tweetData: parsed,
                 alreadyProcesses: false,
-                sentimentValue: (data_item_id % 1000)/500-1
+                sentimentValue: 0
             }
             
             allTweets[data_item_id] = object;
-            added++;
+            // added++;
 
-            analyze(parsed.text, console.log);
-            setTweetColor(
-                x[i],
-                sentimentColor(object.sentimentValue)
-            );
-
-            console.log("[DEBUG] sentiment value =", object.sentimentValue);
-            if (object.sentimentValue < (-0.5))
-                collapseTweet(x[i])
-
+            // analyze tweet text using Watson API
+            requestWatson(data_item_id, parsed.text, function (tweetId, response) {
+                var sentiment = totalSentiment(response);
+                allTweets[tweetId].sentimentValue = sentiment;
+                allTweets[tweetId].alreadyProcessed = true;
+                setTweetColor(tweetId, sentimentColor(sentiment));
+                if (sentiment < (-0.5)) {
+                    collapseTweet(tweetId);
+                }
+            });
         }
     } 
-    console.log("added", added, "new items")
+    // console.log("added", added, "new items")
 }
 
 function processRawTweet(tweet){
-    var t = tweet.getElementsByClassName("js-tweet-text")[0].innerHTML
-    t = t.replace(/<a.*\/a>/i, "")
-
-    var a = tweet.getElementsByClassName("fullname")[0].innerHTML
-
-    return {author: a, text: t}
+    var t = tweet.getElementsByClassName("js-tweet-text")[0].innerHTML;
+    t = t.replace(/<a.*\/a>/i, "");
+    var a = tweet.getElementsByClassName("fullname")[0].innerHTML;
+    return {author: a, text: t};
 }
 
-function collapseTweet(tweet){
+function collapseTweet(tweetId){
+    var tweet = allTweets[tweetId].tweet;
     var parentNode = tweet.parentNode
     var toggleButton = document.createElement("button")
 
@@ -69,14 +68,8 @@ function collapseTweet(tweet){
     })
 
     parentNode.appendChild(toggleButton)
-
 }
 
-getNewTweets()
-setInterval(getNewTweets, 10000)
-
-setTimeout( () => console.log(allTweets), 5000)
-
-function analyzeWord(word) {
-
-}
+getNewTweets();
+setInterval(getNewTweets, 1000);
+// setTimeout(() => console.log(allTweets), 5000)
