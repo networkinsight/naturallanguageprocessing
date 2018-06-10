@@ -7,7 +7,3 @@
 [submodule "NLHackathon"]
 	path = NLHackathon
 	url = https://github.com/franzi-19/NLHackathon.git
-[submodule "wikiwars"]
-	path = wikiwars
-	url = https://github.com/TheHedgeify/wikiwars.git
-	branch = master
